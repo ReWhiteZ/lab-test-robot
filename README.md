@@ -97,3 +97,33 @@ uv run robot --outputdir results tests/saucedemo.robot
 - ใช้ `Test Teardown` ปิด browser แม้กรณี test ล้มเหลว
 - ใช้ explicit wait ของ SeleniumLibrary แทนการหน่วงตายตัว
 - เก็บข้อมูลที่เปลี่ยนบ่อยใน variables หรือ resource/configuration file
+
+## เปิดดูระหว่างสอบ: ทางลัดและภาพรวมไฟล์นี้
+
+ให้จำโครงสร้าง Robot เป็น **Settings → Variables → Test Cases → Keywords**. Test case บอกลำดับงานด้วยชื่อ keyword; keyword ซ่อนขั้นตอนย่อยและรับค่าผ่าน `[Arguments]`. แต่ละคอลัมน์คั่นด้วยช่องว่างอย่างน้อยสองช่อง และ `${name}` คือ scalar variable
+
+ไฟล์ `tests/saucedemo.robot` มี test case `Complete SauceDemo Purchase` เพียงกรณีเดียว โดยเรียก keyword สำหรับ login, sort, ตรวจราคา, เพิ่มสินค้า, checkout, ตรวจยอด และยืนยันคำสั่งซื้อ จุดสำคัญคือ test case อ่านเป็น workflow ส่วนรายละเอียด Selenium อยู่ใน user keywords ด้านล่าง
+
+### คำสั่งที่ใช้บ่อย
+
+```powershell
+uv sync                                           # ติดตั้ง dependencies จาก lockfile
+uv run robot --outputdir results tests            # รันทุก test ใน tests/
+uv run robot --outputdir results tests/saucedemo.robot  # รันไฟล์เดียว
+```
+
+ผลลัพธ์หลักคือ `results/report.html`, `results/log.html` และ `results/output.xml`. ใช้ `--test "ชื่อ Test"` เพื่อเลือก test case หรือ `--include tag` หากกำหนด tag ไว้
+
+### เมื่อเจอปัญหา
+
+- Robot หา keyword ไม่เจอ: ตรวจว่า import Library/Resource ใน Settings และสะกดชื่อ keyword ถูก
+- keyword หา element ไม่เจอ: ตรวจ locator และใช้ `Wait Until Element Is Visible` ก่อน action
+- test fail แล้ว browser ยังเปิด: กำหนด `Test Teardown    Close All Browsers`
+- ดูขั้นตอนที่ fail: เปิด `log.html` แล้วตรวจ keyword, locator และข้อความ error ในจุดนั้น
+
+### เอกสารอ้างอิงขณะสอบ
+
+- [Robot Framework User Guide](https://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html)
+- [Robot Framework: Writing your first test](https://docs.robotframework.org/docs/getting_started/how_to_write_rf)
+- [SeleniumLibrary keyword documentation](https://robotframework.org/SeleniumLibrary/SeleniumLibrary.html)
+- [uv: Working on projects](https://docs.astral.sh/uv/guides/projects/)
