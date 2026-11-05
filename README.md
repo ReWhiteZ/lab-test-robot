@@ -12,12 +12,12 @@
 
 ## สร้างโปรเจกต์จากศูนย์
 
-```powershell
+```cmd
 uv init --python 3.14 robot-selenium-tests
-cd robot-selenium-tests
+cd /d robot-selenium-tests
 uv add robotframework==7.5 robotframework-seleniumlibrary
-New-Item -ItemType Directory tests
-New-Item -ItemType Directory results
+mkdir tests
+mkdir results
 ```
 
 สร้างไฟล์ Robot เช่น `tests/browser_basics.robot` แล้วเริ่มจากโครงสร้างนี้:
@@ -77,14 +77,14 @@ Robot ใช้ช่องว่างอย่างน้อยสองช�
 
 จากโฟลเดอร์ Lab:
 
-```powershell
+```cmd
 uv sync
 uv run robot --outputdir results tests
 ```
 
 รันไฟล์เดียวได้ด้วย:
 
-```powershell
+```cmd
 uv run robot --outputdir results tests/saucedemo.robot
 ```
 
@@ -106,7 +106,7 @@ uv run robot --outputdir results tests/saucedemo.robot
 
 ### คำสั่งที่ใช้บ่อย
 
-```powershell
+```cmd
 uv sync                                           # ติดตั้ง dependencies จาก lockfile
 uv run robot --outputdir results tests            # รันทุก test ใน tests/
 uv run robot --outputdir results tests/saucedemo.robot  # รันไฟล์เดียว
@@ -127,3 +127,4 @@ uv run robot --outputdir results tests/saucedemo.robot  # รันไฟล์�
 - [Robot Framework: Writing your first test](https://docs.robotframework.org/docs/getting_started/how_to_write_rf)
 - [SeleniumLibrary keyword documentation](https://robotframework.org/SeleniumLibrary/SeleniumLibrary.html)
 - [uv: Working on projects](https://docs.astral.sh/uv/guides/projects/)
+
