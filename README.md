@@ -13,8 +13,9 @@
 ## สร้างโปรเจกต์จากศูนย์
 
 ```cmd
-uv init --python 3.14 robot-selenium-tests
+mkdir robot-selenium-tests
 cd /d robot-selenium-tests
+uv init
 uv add robotframework==7.5 robotframework-seleniumlibrary
 mkdir tests
 mkdir results
